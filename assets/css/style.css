@@ -35,7 +35,7 @@ body {
 
 }
 
-.option-btn {
+.answer-buttons button {
     display: flex;
     padding: 10px;
     margin: 5px;

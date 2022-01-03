@@ -1,7 +1,8 @@
 
 var startButton = document.querySelector(".start-button");
 var questionsContainerEl = document.querySelector("#questions-container");
-var nextButtonEl = document.querySelector("#btn-next");
+var nextButtonEl = document.querySelector(".next-button");
+var introDivEl = document.querySelector("#intro");
 
 var arrayOfQuestionData = [
     {
@@ -33,50 +34,57 @@ var arrayOfQuestionData = [
     }
 ];
 
+var timeRemain = 30;
+var timerDiv = document.createElement("div");
+timerDiv.textContent = "Remaining time:" + timeRemain;
+var select =document.querySelector(".intro");
+select.appendChild(timerDiv);
 
-startButton.addEventListener("click", function() {
-    startButton.classList.add("hide");
-    var numberOfQuestion = arrayOfQuestionData.length;
+var timer =  function() {
+    timeRemain--;
+    timerDiv.textContent = "Remaining time:" + timeRemain;
+    console.log(timeRemain);
+    if(timeRemain<=0) {
+        alert("The quiz ends as you lost your time.");
+        clearInterval();
+    };
+};
+
+var remainingTime = function() {
+    setInterval(timer, 1000);
+}
+var startQuiz = function() {
+    startButton.addEventListener("click", function() {
+        startButton.classList.add("hide");
+        nextButtonEl.classList.remove("hide");
+        introDivEl.classList.add("hide");
+        setQuestion();
+        remainingTime();
+    })
+
+};
+
+var setQuestion = function() {
     var questionTextEl = document.querySelector(".question");
     var optionA = document.querySelector(".a");
     var optionB = document.querySelector(".b");
     var optionC = document.querySelector(".c");
     var optionD = document.querySelector(".d");
-    for(var i = 0; i < arrayOfQuestionData.length; i++) {
-        questionTextEl.innerHTML = arrayOfQuestionData[0].question;
-        optionA.innerHTML = arrayOfQuestionData[0].optionA;
-        optionB.innerHTML = arrayOfQuestionData[0].optionB;
-        optionC.innerHTML = arrayOfQuestionData[0].optionC;
-        optionD.innerHTML = arrayOfQuestionData[0].optionD;
 
-
+    var questionArrayLength = arrayOfQuestionData.length;
+    var i = 0;
+    while(i <questionArrayLength) {
+        nextButtonEl.addEventListener("click", function () {
+            questionTextEl.textContent = arrayOfQuestionData[i].question;
+            optionA.textContent = arrayOfQuestionData[i].optionA;
+            optionB.textContent = arrayOfQuestionData[i].optionB;
+            optionC.textContent = arrayOfQuestionData[i].optionC;
+            optionD.textContent = arrayOfQuestionData[i].optionD
+            questionsContainerEl.classList.remove("hide");
+        })
+        break;
     }
-    questionsContainerEl.classList.remove("hide");
-    nextButtonEl.classList.remove("hide");
-});
-
-// call the select answer
-     selectAnswer();
-
-// Increment the score if the answer is correct
-
-countScore();
-
-// decrement the timer function by 10 if false answer
-
-// call setNextQuestion() for the next question
-setNextQuestion();
-
-
-function setNextQuestion() {
 
 };
 
-function selectAnswer() {
-
-
-};
-
-function countScore() {
-    // if answer is coreect, the  variable score will be incremented
-}
+startQuiz();

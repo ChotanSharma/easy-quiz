@@ -35,14 +35,12 @@ var arrayOfQuestionData = [
 ];
 
 var timeRemain = 30;
-var timerDiv = document.createElement("div");
-timerDiv.textContent = "Remaining time:" + timeRemain;
-var select =document.querySelector(".intro");
-select.appendChild(timerDiv);
+var select =document.querySelector(".timer");
+select.textContent = "Remaining time:" + timeRemain;
 
 var timer =  function() {
     timeRemain--;
-    timerDiv.textContent = "Remaining time:" + timeRemain;
+    select.textContent = "Remaining time:" + timeRemain;
     console.log(timeRemain);
     if(timeRemain<=0) {
         alert("The quiz ends as you lost your time.");

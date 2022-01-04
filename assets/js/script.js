@@ -56,33 +56,46 @@ var startQuiz = function() {
         startButton.classList.add("hide");
         nextButtonEl.classList.remove("hide");
         introDivEl.classList.add("hide");
-        setQuestion();
         remainingTime();
+        setNextQuestion();
     })
 
 };
 
-var setQuestion = function() {
-    var questionTextEl = document.querySelector(".question");
-    var optionA = document.querySelector(".a");
-    var optionB = document.querySelector(".b");
-    var optionC = document.querySelector(".c");
-    var optionD = document.querySelector(".d");
+var setQuestion = function(i) {
+    nextButtonEl.addEventListener("click", function () {
+        var questionTextEl = document.querySelector(".question");
+        var optionOne = document.querySelector(".a");
+        var optionTwo = document.querySelector(".b");
+        var optionThree = document.querySelector(".c");
+        var optionFour = document.querySelector(".d");
 
-    var questionArrayLength = arrayOfQuestionData.length;
-    var i = 0;
-    while(i <questionArrayLength) {
-        nextButtonEl.addEventListener("click", function () {
-            questionTextEl.textContent = arrayOfQuestionData[i].question;
-            optionA.textContent = arrayOfQuestionData[i].optionA;
-            optionB.textContent = arrayOfQuestionData[i].optionB;
-            optionC.textContent = arrayOfQuestionData[i].optionC;
-            optionD.textContent = arrayOfQuestionData[i].optionD
-            questionsContainerEl.classList.remove("hide");
-        })
-        break;
-    }
+        questionTextEl.textContent = arrayOfQuestionData[i].question;
+        optionOne.textContent = arrayOfQuestionData[i].optionA;
+        optionTwo.textContent = arrayOfQuestionData[i].optionB; 
+        optionThree.textContent = arrayOfQuestionData[i].optionC;
+        optionFour.textContent = arrayOfQuestionData[i].optionD
+        questionsContainerEl.classList.remove("hide");
+            
+    })
+};
 
+
+var k = 0;
+function setNextQuestion() {
+    for(var j = 0; j < arrayOfQuestionData.length; j++) {
+        setQuestion(k);
+        if(timeRemain>0) {
+            var answerButtonEl = document.querySelector(".answer-buttons");
+            answerButtonEl.addEventListener("click", function() {
+                k++;
+                setQuestion(k);   
+            });
+
+            break;
+            
+        };
+    };
 };
 
 startQuiz();

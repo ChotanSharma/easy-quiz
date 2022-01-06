@@ -63,14 +63,17 @@ var startQuiz = function() {
 
 };
 
+// select the answer and add the score
+
+
 //select the div(class="questions-container") to insert the questions using for loop
 var setQuestion = function(i) {
     nextButtonEl.addEventListener("click", function () {
         var questionTextEl = document.querySelector(".question");
-        var optionOne = document.querySelector(".a");
-        var optionTwo = document.querySelector(".b");
-        var optionThree = document.querySelector(".c");
-        var optionFour = document.querySelector(".d");
+        var optionOne = document.querySelector("#a");
+        var optionTwo = document.querySelector("#b");
+        var optionThree = document.querySelector("#c");
+        var optionFour = document.querySelector("#d");
 
         questionTextEl.textContent = arrayOfQuestionData[i].question;
         optionOne.textContent = arrayOfQuestionData[i].optionA;
@@ -84,15 +87,15 @@ var setQuestion = function(i) {
 
 // using for loop to loop over the question object
 // if the user click answer button and next button, the next question appears
-var k = 0;
+var currentQuestion = 0;
 function setNextQuestion() {
     for(var j = 0; j < arrayOfQuestionData.length; j++) {
-        setQuestion(k);
+        setQuestion(currentQuestion);
         if(timeRemain>0) {
-            var answerButtonEl = document.querySelector(".answer-buttons");
-            answerButtonEl.addEventListener("click", function() {
-                k++;
-                setQuestion(k);   
+            var answerEl = document.querySelector(".answer");
+            answerEl.addEventListener("click", function() {
+                currentQuestion++;
+                setQuestion(currentQuestion);   
             });
 
             break;

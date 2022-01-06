@@ -37,7 +37,7 @@ var arrayOfQuestionData = [
 var timeRemain = 30;
 var select =document.querySelector(".timer");
 select.textContent = "Remaining time:" + timeRemain;
-
+// Timer function to countdown
 var timer =  function() {
     timeRemain--;
     select.textContent = "Remaining time:" + timeRemain;
@@ -47,10 +47,11 @@ var timer =  function() {
         clearInterval();
     };
 };
-
+ // use the setInterval() to set the countdown at a regular interval
 var remainingTime = function() {
     setInterval(timer, 1000);
-}
+};
+
 var startQuiz = function() {
     startButton.addEventListener("click", function() {
         startButton.classList.add("hide");
@@ -62,6 +63,7 @@ var startQuiz = function() {
 
 };
 
+//select the div(class="questions-container") to insert the questions using for loop
 var setQuestion = function(i) {
     nextButtonEl.addEventListener("click", function () {
         var questionTextEl = document.querySelector(".question");
@@ -80,7 +82,8 @@ var setQuestion = function(i) {
     })
 };
 
-
+// using for loop to loop over the question object
+// if the user click answer button and next button, the next question appears
 var k = 0;
 function setNextQuestion() {
     for(var j = 0; j < arrayOfQuestionData.length; j++) {

@@ -64,7 +64,7 @@ var startQuiz = function() {
 };
 
 //select the div(class="questions-container") to insert the questions using for loop
-var setQuestion = function(i) {
+var setQuestion = function() {
     nextButtonEl.addEventListener("click", function () {
         var questionTextEl = document.querySelector(".question");
         var optionOne = document.querySelector(".a");
@@ -89,7 +89,7 @@ function setNextQuestion() {
     for(var j = 0; j < arrayOfQuestionData.length; j++) {
         setQuestion(k);
         if(timeRemain>0) {
-            var answerButtonEl = document.querySelector(".answer-buttons");
+            var answerButtonEl = document.getElementsByClassName("answer");
             answerButtonEl.addEventListener("click", function() {
                 k++;
                 setQuestion(k);   

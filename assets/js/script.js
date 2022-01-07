@@ -42,9 +42,18 @@ var timer =  function() {
     timeRemain--;
     select.textContent = "Remaining time:" + timeRemain;
     console.log(timeRemain);
-    if(timeRemain<=0) {
-        alert("The quiz ends as you lost your time.");
+    if(timeRemain===0) {
+        
         clearInterval();
+        select.classList.add("hide");
+        var replay = window.confirm("Would you like to retry the quiz?");
+        if(replay) {
+            introDivEl.classList.remove("hide");
+            startQuiz();
+
+        } else {
+            // show the result
+        }
     };
 };
  // use the setInterval() to set the countdown at a regular interval
@@ -67,41 +76,58 @@ var startQuiz = function() {
 
 
 //select the div(class="questions-container") to insert the questions using for loop
-var setQuestion = function(i) {
-    nextButtonEl.addEventListener("click", function () {
+var currentQuestion = 0;
+var setQuestion = function() {
         var questionTextEl = document.querySelector(".question");
-        var optionOne = document.querySelector("#a");
-        var optionTwo = document.querySelector("#b");
-        var optionThree = document.querySelector("#c");
-        var optionFour = document.querySelector("#d");
+        var optionOne = document.getElementById("a_text");
+        var optionTwo = document.getElementById("b_text");
+        var optionThree = document.getElementById("c_text");
+        var optionFour = document.getElementById("d_text");
 
-        questionTextEl.textContent = arrayOfQuestionData[i].question;
-        optionOne.textContent = arrayOfQuestionData[i].optionA;
-        optionTwo.textContent = arrayOfQuestionData[i].optionB; 
-        optionThree.textContent = arrayOfQuestionData[i].optionC;
-        optionFour.textContent = arrayOfQuestionData[i].optionD
+        var currentQuiz = arrayOfQuestionData[currentQuestion];
+
+        questionTextEl.innerHTML = currentQuiz.question;
+        optionOne.innerHTML = currentQuiz.optionA;
+        optionTwo.innerHTML = currentQuiz.optionB; 
+        optionThree.innerHTML = currentQuiz.optionC;
+        optionFour.innerHTML = currentQuiz.optionD
+
         questionsContainerEl.classList.remove("hide");
-            
-    })
 };
 
-// using for loop to loop over the question object
+var answerEls = document.querySelectorAll('.answer');
+
+function deselectAnswers() {
+    answerEls.forEach(answerEl => answerEl.checked = false)
+};
+
+function getSelected() {
+    var answer="";
+    answerEls.forEach(answerEl => {
+        if(answerEl.checked) {
+            answer = answerEl.id
+        }
+    })
+    return answer
+};
 // if the user click answer button and next button, the next question appears
-var currentQuestion = 0;
+var score = 0;
 function setNextQuestion() {
     for(var j = 0; j < arrayOfQuestionData.length; j++) {
-        setQuestion(currentQuestion);
-        if(timeRemain>0) {
-            var answerEl = document.querySelector(".answer");
-            answerEl.addEventListener("click", function() {
-                currentQuestion++;
-                setQuestion(currentQuestion);   
-            });
+        setQuestion();
+        nextButtonEl.addEventListener("click", function() {
+            if(timeRemain>0) {
+                getSelected();
+                if(answer === arrayOfQuestionData[currentQuestion].correctAnswer) {
+                        score = timeRemain;
+                    }
+                currentQuestion++; 
+            }
 
-            break;
-            
-        };
-    };
+        });
+             
+    }
+    console.log(score);
 };
 
 startQuiz();

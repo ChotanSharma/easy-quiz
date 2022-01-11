@@ -3,6 +3,7 @@ var startButton = document.querySelector(".start-button");
 var questionsContainerEl = document.querySelector("#questions-container");
 var nextButtonEl = document.querySelector(".next-button");
 var introDivEl = document.querySelector("#intro");
+var submitButton = document.getElementById("btn-submit");
 
 var arrayOfQuestionData = [
     {
@@ -34,7 +35,7 @@ var arrayOfQuestionData = [
     }
 ];
 
-var timeRemain = 30;
+var timeRemain = 60;
 var select =document.querySelector(".timer");
 select.textContent = "Remaining time:" + timeRemain;
 // Timer function to countdown
@@ -57,48 +58,104 @@ var startQuiz = function() {
         startButton.classList.add("hide");
         nextButtonEl.classList.remove("hide");
         introDivEl.classList.add("hide");
-        remainingTime();
-        setNextQuestion();
+        nextButtonEl.addEventListener("click", function() {
+            setQuestion(k);
+            checkAnswer(k);
+            remainingTime();
+            setNextQuestion();
+            k++;
+            if (k == arrayOfQuestionData.length) {
+                nextButtonEl.classList.add("hide");
+                submitButton.classList.remove("hide");
+                submitAnswers();
+            };
+        });
+        
+        
+        
     })
-
+    
 };
 
 //select the div(class="questions-container") to insert the questions using for loop
-var setQuestion = function(i) {
-    nextButtonEl.addEventListener("click", function () {
-        var questionTextEl = document.querySelector(".question");
-        var optionOne = document.querySelector(".a");
-        var optionTwo = document.querySelector(".b");
-        var optionThree = document.querySelector(".c");
-        var optionFour = document.querySelector(".d");
-
-        questionTextEl.textContent = arrayOfQuestionData[i].question;
-        optionOne.textContent = arrayOfQuestionData[i].optionA;
-        optionTwo.textContent = arrayOfQuestionData[i].optionB; 
-        optionThree.textContent = arrayOfQuestionData[i].optionC;
-        optionFour.textContent = arrayOfQuestionData[i].optionD
-        questionsContainerEl.classList.remove("hide");
-            
-    })
-};
-
-// using for loop to loop over the question object
-// if the user click answer button and next button, the next question appears
 var k = 0;
-function setNextQuestion() {
-    for(var j = 0; j < arrayOfQuestionData.length; j++) {
-        setQuestion(k);
-        if(timeRemain>0) {
-            var answerButtonEl = document.querySelector(".answer-buttons");
-            answerButtonEl.addEventListener("click", function() {
-                k++;
-                setQuestion(k);   
-            });
+var setQuestion = function(k) {
+        var questionTextEl = document.querySelector(".question");
+        var optionOne = document.querySelector("#a");
+        var optionTwo = document.querySelector("#b");
+        var optionThree = document.querySelector("#c");
+        var optionFour = document.querySelector("#d");
 
-            break;
-            
-        };
-    };
+        questionTextEl.textContent = arrayOfQuestionData[k].question;
+        optionOne.textContent = arrayOfQuestionData[k].optionA;
+        optionTwo.textContent = arrayOfQuestionData[k].optionB; 
+        optionThree.textContent = arrayOfQuestionData[k].optionC;
+        optionFour.textContent = arrayOfQuestionData[k].optionD
+        questionsContainerEl.classList.remove("hide");
 };
+
+var answerClick = document.querySelector(".answer");
+
+function checkAnswer(k) { 
+    var answerDiv = document.createElement("div");
+        answerDiv.classList.add("answer");
+        //answerDiv.innerHTML ="Check Answer!!!";
+        questionsContainerEl.append(answerDiv);
+
+    answerClick.addEventListener("click", function(e) {
+        var answer = e.target.innerHTML;
+        if(answer == arrayOfQuestionData[k].correctAnswer) {
+            console.log("correct answer!!!");
+            answerDiv.innerHTML ="Correct Answer!!!";
+            
+        
+        
+        } else {
+            answerDiv.innerHTML ="Incorrect Answer!!!";
+            timeRemain = timeRemain - 5;
+            
+    
+        }
+    })
+
+}
+
+function setNextQuestion() {
+    
+        setQuestion(k);
+        
+        checkAnswer(k);
+        
+};
+
+
+function submitAnswers() {
+    submitButton.addEventListener("click", function() {
+        clearInterval(timer);
+        var highScore = timeRemain;
+        var storingScore = window.prompt("Your total score is " + highScore + " . To save your score, would you please enter your name?");
+        console.log(storingScore);
+        
+         if(!storingScore || storingScore == "") {
+             window.prompt("Sorry, fail to save your score. Your input is not valid");
+
+         } else {
+             localStorage.setItem(storingScore, JSON.stringify(highScore));
+
+         }
+    });
+};
+
+
+var getHighScore = function() {
+    var getData = localStorage.getItem(storingScore);
+    var parseData = JSON.parse(getData);
+    console.log(parseData);
+}
+
+var highScoreEl = document.getElementById("high-score");
+highScoreEl.addEventListener("click", function() {
+    getHighScore();
+})
 
 startQuiz();

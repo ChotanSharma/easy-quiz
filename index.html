@@ -12,8 +12,8 @@
     <header class ="intro" id = "intro">
         <div class = "intro-text" id = "intro-text">
             <h2 class = "intro-text-head" id = "intro-text-head">Test Yourself</h2>
-                <p class= "intro-texr-para">Answer the three question within 30 seconds.<br> 
-                For incorrect answer 10 minuties will be deducted from total time.</p>
+                <p class= "intro-texr-para">Answer the three question within 60 seconds.<br> 
+                For incorrect answer 10 seconds will be deducted from total time.</p>
         </div>
     </header>
 
@@ -27,10 +27,10 @@
         <div id="questions-container" class="hide">
             <div class="question" id="ques">Question</div>
             <div class="answer-buttons" id="answer-keys">
-                <button class="a">Answer a</button>
-                <button class="b">Answer b</button>
-                <button class="c">Answer c</button>
-                <button class="d">Answer d</button>
+                <button class="answer" id="a">Answer a</button>
+                <button class="answer" id="b">Answer b</button>
+                <button class="answer" id="c">Answer c</button>
+                <button class="answer" id="d">Answer d</button>
             </div>
 
         </div> 
@@ -41,6 +41,8 @@
             <button id="btn-start" class="start-button">Start Quiz</button>
 
             <button id="btn-next" class="next-button hide">Next</button>
+
+            <button id="btn-submit" class="submit-button hide">Submit Answers</button>
         </div>
 
         <!--div for showing timer -->

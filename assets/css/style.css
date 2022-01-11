@@ -65,26 +65,25 @@ header p {
 
 }
 
-.start-button, .next-button {
-    font-size: 1.5rem;
-    font-weight: bold;
-    padding: 8px 5px;
-}
-
 .control-buttons {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.hide {  
-    display: none;
+.start-button, .next-button .submit-button {
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 8px 3px 5px 2px;
+    border: 10px 5px 10px 5px;
+    border-radius: 5px;
 }
 
-.option-btn:hover {
-    background-color: cornflowerblue;
-    color: white;
-    border-color: black;
+.submit-button:hover {
+    background-color: burlywood;
+}
+.hide {  
+    display: none;
 }
 
 

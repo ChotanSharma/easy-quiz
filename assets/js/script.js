@@ -86,9 +86,15 @@ var startQuiz = function() {
     
 };
 
+
 // variable for setting initial question
 var k = 0;
 var setQuestion = function(k) {
+=======
+//select the div(class="questions-container") to insert the questions using for loop
+var setQuestion = function() {
+    nextButtonEl.addEventListener("click", function () {
+
         var questionTextEl = document.querySelector(".question");
         var optionOne = document.querySelector("#a");
         var optionTwo = document.querySelector("#b");
@@ -154,6 +160,19 @@ function submitAnswers() {
 
          }
     });
+  
+        if(timeRemain>0) {
+            var answerButtonEl = document.getElementsByClassName("answer");
+            answerButtonEl.addEventListener("click", function() {
+                k++;
+                setQuestion(k);   
+            });
+
+            break;
+            
+        };
+    };
+
 };
 
 
